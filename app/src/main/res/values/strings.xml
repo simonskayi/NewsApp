@@ -1,0 +1,13 @@
+<resources>
+    <string name="app_name">All News</string>
+    <string name="title_home">Home</string>
+    <string name="title_favourite">Favourite</string>
+    <string name="title_search">Search</string>
+
+    <string name="search_bar_hint">Search any keyword</string>
+    <string name="news_icon">News Agency Icon</string>
+    <string name="news_string">News Image</string>
+    <string name="save_news">Save News</string>
+    <!-- TODO: Remove or change this placeholder text -->
+    <string name="hello_blank_fragment">Hello blank fragment</string>
+</resources>
