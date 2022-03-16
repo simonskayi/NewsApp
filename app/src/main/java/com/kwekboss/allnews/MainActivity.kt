@@ -1,7 +1,7 @@
 package com.kwekboss.allnews
 
 import android.os.Bundle
-import android.util.Log
+
 import com.google.android.material.bottomnavigation.BottomNavigationView
 import androidx.appcompat.app.AppCompatActivity
 import androidx.navigation.findNavController
@@ -23,8 +23,6 @@ class MainActivity : AppCompatActivity(){
         //Setting up FragmentContainerView
         val navHostFragment = supportFragmentManager.findFragmentById(R.id.nav_host_fragment_activity_main) as NavHostFragment
         val navController = navHostFragment.navController
-
-        Log.i("tag","i'm working from mainActivity")
 
         //This considers menu should be considered as top level destinations.
        appBarConfiguration = AppBarConfiguration(

@@ -15,6 +15,8 @@ import androidx.recyclerview.widget.RecyclerView
 import com.kwekboss.allnews.R
 import com.kwekboss.allnews.model.Article
 import com.kwekboss.allnews.recyclerview.NewsAdapter
+import com.kwekboss.allnews.repository.Repository
+import com.kwekboss.allnews.repository.ViewModelFactory
 
 class HomeFragment : Fragment(), NewsAdapter.ArticleClicked {
     private lateinit var adapter: NewsAdapter
@@ -33,7 +35,9 @@ class HomeFragment : Fragment(), NewsAdapter.ArticleClicked {
 
         progressBar = view.findViewById(R.id.progressBar)
         //Instantiating the viewModel
-        val homeViewModel = ViewModelProvider(this)[HomeViewModel::class.java]
+        val repository = Repository()
+        val viewModelFactory=ViewModelFactory(repository)
+        val homeViewModel = ViewModelProvider(this,viewModelFactory)[HomeViewModel::class.java]
 
         // setting up the recyclerView
         val recyclerview = view.findViewById<RecyclerView>(R.id.news_recyclerview)

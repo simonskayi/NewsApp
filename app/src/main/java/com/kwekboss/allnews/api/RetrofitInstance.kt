@@ -10,5 +10,8 @@ object RetrofitInstance {
         .baseUrl(Base_url)
         .addConverterFactory(GsonConverterFactory.create())
         .build()
-        .create(NewsApi::class.java)
+
+       val webRequest by lazy {
+           retrofit.create(NewsApi::class.java)
+       }
 }

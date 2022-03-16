@@ -6,18 +6,19 @@ import androidx.lifecycle.viewModelScope
 import com.kwekboss.allnews.api.RetrofitInstance
 import com.kwekboss.allnews.model.Article
 import com.kwekboss.allnews.model.NewsData
+import com.kwekboss.allnews.repository.Repository
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
 
 
-class HomeViewModel(): ViewModel() {
+class HomeViewModel(private val repository: Repository): ViewModel() {
 
     var getResponse = MutableLiveData<NewsData>()
 
     fun loadData() {
         viewModelScope.launch(Dispatchers.IO){
             try{
-               val response = RetrofitInstance.retrofit.newsRequest()
+               val response = repository.makeApiCall()
                if (response.isSuccessful) {
                    val webData = response.body()!!
                    getResponse.postValue(webData)
