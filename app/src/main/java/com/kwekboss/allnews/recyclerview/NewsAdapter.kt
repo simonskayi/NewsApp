@@ -6,30 +6,25 @@ import android.view.View
 import android.view.ViewGroup
 import android.widget.ImageView
 import android.widget.TextView
-import androidx.recyclerview.widget.AsyncListDiffer
+import androidx.paging.PagingDataAdapter
 import androidx.recyclerview.widget.DiffUtil
 import androidx.recyclerview.widget.RecyclerView
 import com.bumptech.glide.Glide
 import com.kwekboss.allnews.R
 import com.kwekboss.allnews.model.Article
 
-
-
 class NewsAdapter(private val articleClicked: ArticleClicked) :
-    RecyclerView.Adapter<NewsAdapter.ViewHolder>() {
+   PagingDataAdapter<Article,NewsAdapter.ViewHolder>(DiffCallBack) {
 
     // Implementing DiffUtils
-    private val differCallback = object : DiffUtil.ItemCallback<Article>() {
+    object DiffCallBack : DiffUtil.ItemCallback<Article>() {
         override fun areItemsTheSame(oldItem: Article, newItem: Article): Boolean {
             return oldItem.url == newItem.url
         }
-
         override fun areContentsTheSame(oldItem: Article, newItem: Article): Boolean {
             return oldItem == newItem
         }
     }
-    val differ = AsyncListDiffer(this, differCallback)
-
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ViewHolder {
         val layout =
@@ -38,14 +33,10 @@ class NewsAdapter(private val articleClicked: ArticleClicked) :
     }
 
     override fun onBindViewHolder(holder: ViewHolder, position: Int) {
-        val article = differ.currentList[position]
-        holder.bindView(article)
-
-
-    }
-
-    override fun getItemCount(): Int {
-        return differ.currentList.size
+        val article = getItem(position)
+        if (article != null) {
+            holder.bindView(article)
+        }
     }
 
     inner class ViewHolder(itemView: View, articleClicked: ArticleClicked) :
@@ -54,7 +45,7 @@ class NewsAdapter(private val articleClicked: ArticleClicked) :
 
         init {
             itemView.setOnClickListener {
-                articleClicked.openClickedArticle(differ.currentList[absoluteAdapterPosition])
+                articleClicked.openClickedArticle(getItem(absoluteAdapterPosition)!!)
             }
         }
 
@@ -74,4 +65,6 @@ class NewsAdapter(private val articleClicked: ArticleClicked) :
     interface ArticleClicked {
         fun openClickedArticle(article: Article)
     }
+
+
 }

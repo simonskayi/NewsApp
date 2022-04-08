@@ -12,7 +12,7 @@ interface NewsApi {
    @Query("language")
     languages:String ="en",
    @Query("page")
-      page:Int = 1,
+      page:Int,
    @Query("apiKey")
    apiKey:String = AccessKey.apiKey
     ):Response<NewsData>

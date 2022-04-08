@@ -3,13 +3,13 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:id="@+id/mobile_navigation"
-    app:startDestination="@+id/navigation_home">
+    app:startDestination="@+id/navigation_newsfeed">
 
     <fragment
-        android:id="@+id/navigation_home"
-        android:name="com.kwekboss.allnews.ui.home.HomeFragment"
-        android:label="@string/title_home"
-        tools:layout="@layout/fragment_home" >
+        android:id="@+id/navigation_newsfeed"
+        android:name="com.kwekboss.allnews.ui.newsfeed.NewsFeedFragment"
+        android:label="@string/label_newsFeed"
+        tools:layout="@layout/fragment_newsfeed">
         <action
             android:id="@+id/action_navigation_home_to_articleFragment"
             app:destination="@id/articleFragment" />

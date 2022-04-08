@@ -32,11 +32,9 @@ class ArticleFragment : Fragment() {
         val article = args.newsArticle
 
      // Handling WebViewLogics
-
            webView.apply {
                webViewClient = WebViewClient()
                settings.javaScriptEnabled = true
-
                loadUrl(article.url)
            }
        }
