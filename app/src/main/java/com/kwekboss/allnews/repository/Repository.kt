@@ -1,13 +1,27 @@
 package com.kwekboss.allnews.repository
 
+import androidx.lifecycle.LiveData
 import androidx.paging.PagingSource
 import androidx.paging.PagingState
 import com.kwekboss.allnews.api.RetrofitInstance
+import com.kwekboss.allnews.database.NewsDao
 import com.kwekboss.allnews.model.Article
 import com.kwekboss.allnews.model.NewsData
 import retrofit2.Response
 
-class Repository {
+class Repository (private val newsDao: NewsDao ){
+
+
+    suspend fun saveNews(news: Article){
+        newsDao.insert(news)
+    }
+
+    suspend fun deleteNews(news: Article){
+        newsDao.delete(news)
+    }
+
+    fun getAllNews(): LiveData<List<Article>> = newsDao.allNews()
+
 
     //Pagination configuration
  inner class NewsDataSource():PagingSource<Int,Article>(){

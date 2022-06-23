@@ -8,7 +8,9 @@
     <string name="news_icon">News Agency Icon</string>
     <string name="news_string">News Image</string>
     <string name="save_news">Save News</string>
+    <string name="news_saved">News Article Has Been Saved</string>
     <string name="label_newsFeed">Top Headlines</string>
+    <string name="news_deleted">News Deleted Successfully</string>
     <!-- TODO: Remove or change this placeholder text -->
     <string name="hello_blank_fragment">Hello blank fragment</string>
 </resources>

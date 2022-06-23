@@ -1,62 +1,58 @@
-package com.kwekboss.allnews.recyclerview
-
+package com.kwekboss.allnews.ui.favourite
 
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.ImageView
 import android.widget.TextView
-import androidx.paging.PagingDataAdapter
+import androidx.recyclerview.widget.AsyncListDiffer
 import androidx.recyclerview.widget.DiffUtil
 import androidx.recyclerview.widget.RecyclerView
 import com.bumptech.glide.Glide
 import com.kwekboss.allnews.R
 import com.kwekboss.allnews.model.Article
 
-class NewsAdapter(private val articleClicked: ArticleClicked, private val saveNewsArticle: SaveNewsArticle) :
-   PagingDataAdapter<Article,NewsAdapter.ViewHolder>(DiffCallBack) {
+class SavedNewsAdapter( private val deleteArticle:DeleteFrmFavourite, private val savedArticle:SavedArticles):RecyclerView.Adapter<SavedNewsAdapter.ViewHolder>() {
 
-    // Implementing DiffUtils
-    object DiffCallBack : DiffUtil.ItemCallback<Article>() {
+    private val diffUtil = object : DiffUtil.ItemCallback<Article>(){
         override fun areItemsTheSame(oldItem: Article, newItem: Article): Boolean {
             return oldItem.url == newItem.url
         }
+
         override fun areContentsTheSame(oldItem: Article, newItem: Article): Boolean {
             return oldItem == newItem
         }
+
     }
 
+    val differ = AsyncListDiffer(this,diffUtil)
+
+
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ViewHolder {
-        val layout =
-            LayoutInflater.from(parent.context).inflate(R.layout.news_layout, parent, false)
-        return ViewHolder(layout,articleClicked,saveNewsArticle)
+        val layout = LayoutInflater.from(parent.context).inflate(R.layout.news_layout,parent,false)
+    return ViewHolder(layout,deleteArticle, savedArticle)
     }
 
     override fun onBindViewHolder(holder: ViewHolder, position: Int) {
-        val article = getItem(position)
-        if (article != null) {
-            holder.bindView(article)
-        }
+        holder.bindView(differ.currentList[position])
     }
 
-    inner class ViewHolder(itemView: View, articleClicked: ArticleClicked, saveNewsArticle: SaveNewsArticle) :
-        RecyclerView.ViewHolder(itemView) {
-        val saveArticle = itemView.findViewById<ImageView>(R.id.save_news_article)
+    override fun getItemCount(): Int {
+       return differ.currentList.size
+    }
+
+    inner class ViewHolder(itemView:View,deleteArticle: DeleteFrmFavourite, savedArticle: SavedArticles):RecyclerView.ViewHolder(itemView){
 
         init {
             itemView.setOnClickListener {
-                getItem(absoluteAdapterPosition)?.let { article ->
-                    articleClicked.openClickedArticle(article)
-                }
+                savedArticle.clickedSaveArticle(differ.currentList[absoluteAdapterPosition])
             }
 
-            saveArticle.setOnClickListener {
-                getItem(absoluteAdapterPosition)?.let {
-                    saveNewsArticle.saveNews(it)
-                }
+            itemView.setOnLongClickListener{
+                deleteArticle.delete(differ.currentList[absoluteAdapterPosition])
+            return@setOnLongClickListener true
             }
         }
-
         fun bindView(news: Article) {
             val newsTittle = itemView.findViewById<TextView>(R.id.news_tittle)
             val newsImage = itemView.findViewById<ImageView>(R.id.news_image)
@@ -71,13 +67,15 @@ class NewsAdapter(private val articleClicked: ArticleClicked, private val saveNe
             newsSource.text = news.source.name
             newsDescription.text = news.description
         }
+
     }
 
-    interface ArticleClicked {
-        fun openClickedArticle(article: Article)
+    interface SavedArticles{
+        fun clickedSaveArticle(news: Article)
     }
 
-interface SaveNewsArticle{
-    fun saveNews(newsArticle:Article)
-}
+    interface DeleteFrmFavourite{
+        fun delete(news: Article)
+    }
+
 }
