@@ -27,12 +27,10 @@ class ArticleFragment : Fragment() {
     @SuppressLint("SetJavaScriptEnabled")
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
-
         val webView = view.findViewById<WebView>(R.id.web_View)
-
-        //Creating a safe Args object
+        // safe Args
         val article = args.newsArticle
-     // Handling WebViewLogics
+
            webView.apply {
                webViewClient = WebViewClient()
                settings.javaScriptEnabled = true
