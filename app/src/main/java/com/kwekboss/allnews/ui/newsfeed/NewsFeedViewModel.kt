@@ -14,7 +14,7 @@ import com.kwekboss.allnews.repository.Repository
 class NewsFeedViewModel(private val repository: Repository) : ViewModel() {
 
   val newsData = Pager(PagingConfig(pageSize = 20)){
-      repository.newsDataSource()
+      repository.NewsDataSource()
   }.liveData.cachedIn(viewModelScope)
 }
 

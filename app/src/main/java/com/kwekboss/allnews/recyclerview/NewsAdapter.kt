@@ -45,7 +45,9 @@ class NewsAdapter(private val articleClicked: ArticleClicked) :
 
         init {
             itemView.setOnClickListener {
-                articleClicked.openClickedArticle(getItem(absoluteAdapterPosition)!!)
+                getItem(absoluteAdapterPosition)?.let { article ->
+                    articleClicked.openClickedArticle(article)
+                }
             }
         }
 
@@ -56,7 +58,10 @@ class NewsAdapter(private val articleClicked: ArticleClicked) :
             val newsDescription = itemView.findViewById<TextView>(R.id.news_description)
 
             newsTittle.text = news.title
-            Glide.with(itemView.context).load(news.urlToImage).placeholder(R.drawable.placeholder_image).centerCrop().into(newsImage)
+            Glide.with(itemView.context).load(news.urlToImage)
+                .placeholder(R.drawable.placeholder_image)
+                .centerCrop()
+                .into(newsImage)
             newsSource.text = news.source.name
             newsDescription.text = news.description
         }

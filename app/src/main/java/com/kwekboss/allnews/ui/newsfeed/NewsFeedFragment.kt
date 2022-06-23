@@ -57,15 +57,12 @@ class NewsFeedFragment : Fragment(), NewsAdapter.ArticleClicked {
         // implementing infinite Scrolling of NewsArticles
           fetchData()
 
-
-
-
     }
 
     //Implementing onClickListener
     override fun openClickedArticle(article: Article) {
-    val action = NewsFeedFragmentDirections.actionNavigationHomeToArticleFragment(article)
-        findNavController().navigate(action)
+       val action = NewsFeedFragmentDirections.actionNavigationHomeToArticleFragment(article)
+       findNavController().navigate(action)
     }
 
     private fun fetchData(){
@@ -80,7 +77,7 @@ class NewsFeedFragment : Fragment(), NewsAdapter.ArticleClicked {
                   }
                   else{
                       progressBar.isVisible = false
-                      val errorState =when{
+                      val errorState = when{
                           loadStates.append is LoadState.Error-> loadStates.append as LoadState.Error
                           loadStates.prepend is LoadState.Error-> loadStates.prepend as LoadState.Error
                           loadStates.refresh is LoadState.Error-> loadStates.refresh as LoadState.Error

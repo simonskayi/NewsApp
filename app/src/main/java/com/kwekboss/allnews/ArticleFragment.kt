@@ -8,6 +8,8 @@ import android.view.View
 import android.view.ViewGroup
 import android.webkit.WebView
 import android.webkit.WebViewClient
+import android.widget.Toast
+
 
 import androidx.navigation.fragment.navArgs
 
@@ -25,17 +27,18 @@ class ArticleFragment : Fragment() {
     @SuppressLint("SetJavaScriptEnabled")
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
-        //Hooking Up Views
+
         val webView = view.findViewById<WebView>(R.id.web_View)
 
         //Creating a safe Args object
         val article = args.newsArticle
-
      // Handling WebViewLogics
            webView.apply {
                webViewClient = WebViewClient()
                settings.javaScriptEnabled = true
-               loadUrl(article.url)
+                   loadUrl(article.url)
+
+
            }
        }
 

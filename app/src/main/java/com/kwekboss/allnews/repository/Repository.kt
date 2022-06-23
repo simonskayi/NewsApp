@@ -9,7 +9,8 @@ import retrofit2.Response
 
 class Repository {
 
- inner class newsDataSource():PagingSource<Int,Article>(){
+    //Pagination configuration
+ inner class NewsDataSource():PagingSource<Int,Article>(){
      override fun getRefreshKey(state: PagingState<Int, Article>): Int? {
      return state.anchorPosition?.let {
          anchorPosition-> state.closestPageToPosition(anchorPosition)?.prevKey?.plus(1)
@@ -18,19 +19,19 @@ class Repository {
      }
 
      override suspend fun load(params: LoadParams<Int>): LoadResult<Int, Article> {
-        try{
-            val currentPage = params.key ?:1
-            val response = RetrofitInstance.retrofit.newsRequest(page = currentPage)
-            val responseData = mutableListOf<Article>()
-            val dataReceived =response.body()?.articles ?: emptyList()
-            responseData.addAll(dataReceived)
+         return try{
+             val currentPage = params.key ?:1
+             val response = RetrofitInstance.retrofit.newsRequest(page = currentPage)
+             val responseData = mutableListOf<Article>()
+             val dataReceived =response.body()?.articles ?: emptyList()
+             responseData.addAll(dataReceived)
 
-            val prevKey = if (currentPage==1)null else currentPage.minus(1)
-            return LoadResult.Page(responseData,prevKey,currentPage.plus(1))
+             val prevKey = if (currentPage==1)null else currentPage.minus(1)
+             LoadResult.Page(responseData,prevKey,currentPage.plus(1))
 
-        } catch (error:Exception){
-            return LoadResult.Error(error)
-        }
+         } catch (error:Exception){
+             LoadResult.Error(error)
+         }
      }
 
  }
