@@ -41,7 +41,7 @@ class NewsAdapter(private val articleClicked: ArticleClicked, private val saveNe
 
     inner class ViewHolder(itemView: View, articleClicked: ArticleClicked, saveNewsArticle: SaveNewsArticle) :
         RecyclerView.ViewHolder(itemView) {
-        val saveArticle = itemView.findViewById<ImageView>(R.id.save_news_article)
+        private val saveArticle = itemView.findViewById<ImageView>(R.id.save_news_article)
 
         init {
             itemView.setOnClickListener {
