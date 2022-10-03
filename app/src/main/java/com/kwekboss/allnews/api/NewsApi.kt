@@ -25,7 +25,7 @@ interface NewsApi {
     page:Int = 1,
     @Query("apiKey")
     apiKey:String = AccessKey.apiKey
-    ):Response<List<Article>>
+    ):Response<NewsData>
 
 
 }

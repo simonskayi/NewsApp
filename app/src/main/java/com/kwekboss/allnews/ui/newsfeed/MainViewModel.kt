@@ -2,9 +2,11 @@ package com.kwekboss.allnews.ui.newsfeed
 
 
 import android.app.Application
+import android.util.Log
 import androidx.lifecycle.AndroidViewModel
 import androidx.lifecycle.LiveData
-import androidx.lifecycle.ViewModel
+import androidx.lifecycle.MutableLiveData
+
 import androidx.lifecycle.viewModelScope
 import androidx.paging.Pager
 import androidx.paging.PagingConfig
@@ -17,9 +19,11 @@ import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
 
 
-class NewsFeedViewModel(application: Application) : AndroidViewModel(application) {
+class MainViewModel(application: Application) : AndroidViewModel(application) {
     private val repository:Repository
     val getSavedNews: LiveData<List<Article>>
+    private var _searchResponse = MutableLiveData<List<Article>>()
+    val searchResponse:LiveData<List<Article>> = _searchResponse
 
     init {
     val newsDB = NewsDatabase.getDatabase(application).getNewsDao()
@@ -42,5 +46,20 @@ class NewsFeedViewModel(application: Application) : AndroidViewModel(application
         repository.deleteNews(news)
     }
     }
+    fun getSearch(searchKeyword:String){
+        viewModelScope.launch {
+            val response = repository.searchNews(searchKeyword)
+            try {
+                if (response.isSuccessful){
+                    val responseData = response.body()?.articles
+                    _searchResponse.postValue(responseData)
+                }
+            } catch (e:Exception){
+                Log.d("Search Response", response.errorBody().toString())
+            }
+        }
+    }
+
+
 }
 

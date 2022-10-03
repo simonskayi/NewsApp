@@ -13,17 +13,16 @@ import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.kwekboss.allnews.R
 import com.kwekboss.allnews.model.Article
-import com.kwekboss.allnews.ui.newsfeed.NewsFeedFragmentDirections
-import com.kwekboss.allnews.ui.newsfeed.NewsFeedViewModel
+import com.kwekboss.allnews.ui.newsfeed.MainViewModel
 
 class FavouriteFragment : Fragment(),SavedNewsAdapter.DeleteFrmFavourite,SavedNewsAdapter.SavedArticles {
-    lateinit var favouriteViewModel: NewsFeedViewModel
+    lateinit var favouriteViewModel: MainViewModel
     override fun onCreateView(
         inflater: LayoutInflater,
         container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View {
-      favouriteViewModel = ViewModelProvider(this)[NewsFeedViewModel::class.java]
+      favouriteViewModel = ViewModelProvider(this)[MainViewModel::class.java]
 
         val view = layoutInflater.inflate(R.layout.fragment_favourite, container, false)
         val recyclerView = view.findViewById<RecyclerView>(R.id.saved_news_recyclerview)

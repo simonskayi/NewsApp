@@ -24,7 +24,7 @@ import kotlinx.coroutines.launch
 class NewsFeedFragment : Fragment(), NewsAdapter.ArticleClicked,NewsAdapter.SaveNewsArticle {
     private lateinit var adapter: NewsAdapter
     private lateinit var progressBar: ProgressBar
-    lateinit var newsFeedViewModel:NewsFeedViewModel
+    lateinit var mainViewModel:MainViewModel
 
     override fun onCreateView(
         inflater: LayoutInflater,
@@ -40,7 +40,7 @@ class NewsFeedFragment : Fragment(), NewsAdapter.ArticleClicked,NewsAdapter.Save
         progressBar = view.findViewById(R.id.progressBar)
 
         //Instantiating the viewModel
-        newsFeedViewModel = ViewModelProvider(this)[NewsFeedViewModel::class.java]
+        mainViewModel = ViewModelProvider(this)[MainViewModel::class.java]
 
         // setting up the recyclerView
         val recyclerview = view.findViewById<RecyclerView>(R.id.news_recyclerview)
@@ -60,12 +60,12 @@ class NewsFeedFragment : Fragment(), NewsAdapter.ArticleClicked,NewsAdapter.Save
     }
 
     override fun saveNews(newsArticle: Article) {
-        newsFeedViewModel.saveNews(newsArticle)
+        mainViewModel.saveNews(newsArticle)
         Toast.makeText(requireContext(),R.string.news_saved, Toast.LENGTH_SHORT).show()
     }
 
     private fun fetchData(){
-        newsFeedViewModel.newsData.observe(viewLifecycleOwner){
+        mainViewModel.newsData.observe(viewLifecycleOwner){
            lifecycleScope.launch {
                adapter.submitData(it)
            }

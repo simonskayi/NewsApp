@@ -50,4 +50,8 @@ class Repository (private val newsDao: NewsDao ){
 
  }
 
+suspend fun searchNews(searchQuery:String): Response<NewsData> {
+    return RetrofitInstance.retrofit.searchRequest(searchQuery)
+}
+
 }
