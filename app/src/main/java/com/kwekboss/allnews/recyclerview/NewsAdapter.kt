@@ -13,7 +13,7 @@ import com.bumptech.glide.Glide
 import com.kwekboss.allnews.R
 import com.kwekboss.allnews.model.Article
 
-class NewsAdapter(private val articleClicked: ArticleClicked, private val saveNewsArticle: SaveNewsArticle) :
+class NewsAdapter(private val newsfeedInterface: NewsfeedInterface) :
    PagingDataAdapter<Article,NewsAdapter.ViewHolder>(DiffCallBack) {
 
     // Implementing DiffUtils
@@ -29,7 +29,7 @@ class NewsAdapter(private val articleClicked: ArticleClicked, private val saveNe
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ViewHolder {
         val layout =
             LayoutInflater.from(parent.context).inflate(R.layout.news_layout, parent, false)
-        return ViewHolder(layout,articleClicked,saveNewsArticle)
+        return ViewHolder(layout,newsfeedInterface)
     }
 
     override fun onBindViewHolder(holder: ViewHolder, position: Int) {
@@ -39,20 +39,20 @@ class NewsAdapter(private val articleClicked: ArticleClicked, private val saveNe
         }
     }
 
-    inner class ViewHolder(itemView: View, articleClicked: ArticleClicked, saveNewsArticle: SaveNewsArticle) :
+    inner class ViewHolder(itemView: View, newsArticle: NewsfeedInterface) :
         RecyclerView.ViewHolder(itemView) {
         private val saveArticle = itemView.findViewById<ImageView>(R.id.save_news_article)
 
         init {
             itemView.setOnClickListener {
                 getItem(absoluteAdapterPosition)?.let { article ->
-                    articleClicked.openClickedArticle(article)
+                    newsArticle.openClickedArticle(article)
                 }
             }
 
             saveArticle.setOnClickListener {
                 getItem(absoluteAdapterPosition)?.let {
-                    saveNewsArticle.saveNews(it)
+                    newsArticle.saveNewsArticle(it)
                 }
             }
         }
@@ -73,11 +73,9 @@ class NewsAdapter(private val articleClicked: ArticleClicked, private val saveNe
         }
     }
 
-    interface ArticleClicked {
+    interface NewsfeedInterface {
         fun openClickedArticle(article: Article)
+        fun saveNewsArticle(newsArticle:Article)
     }
 
-interface SaveNewsArticle{
-    fun saveNews(newsArticle:Article)
-}
 }

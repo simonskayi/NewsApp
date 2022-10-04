@@ -17,14 +17,15 @@ import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.kwekboss.allnews.R
 import com.kwekboss.allnews.model.Article
+import com.kwekboss.allnews.model.MainViewModel
 import com.kwekboss.allnews.recyclerview.NewsAdapter
 import kotlinx.coroutines.launch
 
 
-class NewsFeedFragment : Fragment(), NewsAdapter.ArticleClicked,NewsAdapter.SaveNewsArticle {
+class NewsFeedFragment : Fragment(), NewsAdapter.NewsfeedInterface {
     private lateinit var adapter: NewsAdapter
     private lateinit var progressBar: ProgressBar
-    lateinit var mainViewModel:MainViewModel
+    lateinit var mainViewModel: MainViewModel
 
     override fun onCreateView(
         inflater: LayoutInflater,
@@ -44,7 +45,7 @@ class NewsFeedFragment : Fragment(), NewsAdapter.ArticleClicked,NewsAdapter.Save
 
         // setting up the recyclerView
         val recyclerview = view.findViewById<RecyclerView>(R.id.news_recyclerview)
-        adapter = NewsAdapter(this,this)
+        adapter = NewsAdapter(this)
         recyclerview.layoutManager = LinearLayoutManager(activity)
         recyclerview.adapter = adapter
 
@@ -59,7 +60,7 @@ class NewsFeedFragment : Fragment(), NewsAdapter.ArticleClicked,NewsAdapter.Save
        findNavController().navigate(action)
     }
 
-    override fun saveNews(newsArticle: Article) {
+    override fun saveNewsArticle(newsArticle: Article) {
         mainViewModel.saveNews(newsArticle)
         Toast.makeText(requireContext(),R.string.news_saved, Toast.LENGTH_SHORT).show()
     }

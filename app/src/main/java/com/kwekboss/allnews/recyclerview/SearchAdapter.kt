@@ -1,4 +1,4 @@
-package com.kwekboss.allnews.ui.search
+package com.kwekboss.allnews.recyclerview
 
 
 import android.view.LayoutInflater
@@ -6,16 +6,14 @@ import android.view.View
 import android.view.ViewGroup
 import android.widget.ImageView
 import android.widget.TextView
-import androidx.paging.PagingDataAdapter
 import androidx.recyclerview.widget.AsyncListDiffer
 import androidx.recyclerview.widget.DiffUtil
 import androidx.recyclerview.widget.RecyclerView
 import com.bumptech.glide.Glide
 import com.kwekboss.allnews.R
 import com.kwekboss.allnews.model.Article
-import kotlin.math.abs
 
-class SearchAdapter(private val openArticle: OpenArticle) :RecyclerView.Adapter<SearchAdapter.ViewHolder>(){
+class SearchAdapter(private val searchNewsInterface: SearchNewsInterface):RecyclerView.Adapter<SearchAdapter.ViewHolder>(){
 
 
     private val  diffCallBack =  object : DiffUtil.ItemCallback<Article>() {
@@ -31,7 +29,7 @@ class SearchAdapter(private val openArticle: OpenArticle) :RecyclerView.Adapter<
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ViewHolder {
         val layout =
             LayoutInflater.from(parent.context).inflate(R.layout.news_layout, parent, false)
-        return ViewHolder(layout,openArticle)
+        return ViewHolder(layout,searchNewsInterface)
     }
 
     override fun getItemCount(): Int {
@@ -42,12 +40,12 @@ class SearchAdapter(private val openArticle: OpenArticle) :RecyclerView.Adapter<
         holder.bindView(differ.currentList[position])
     }
 
-    inner class ViewHolder(itemView: View, openArticle: OpenArticle) :
+    inner class ViewHolder(itemView: View, searchNews: SearchNewsInterface) :
         RecyclerView.ViewHolder(itemView) {
 
         init {
             itemView.setOnClickListener {
-              openArticle.openArticle(differ.currentList[absoluteAdapterPosition])
+              searchNews.openArticle(differ.currentList[absoluteAdapterPosition])
                 }
             }
 
@@ -67,7 +65,7 @@ class SearchAdapter(private val openArticle: OpenArticle) :RecyclerView.Adapter<
         }
         }
 
-    interface OpenArticle {
+    interface SearchNewsInterface {
         fun openArticle(article: Article)
     }
 

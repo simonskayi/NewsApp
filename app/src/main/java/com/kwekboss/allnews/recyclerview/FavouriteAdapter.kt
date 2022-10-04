@@ -1,4 +1,4 @@
-package com.kwekboss.allnews.ui.favourite
+package com.kwekboss.allnews.recyclerview
 
 import android.view.LayoutInflater
 import android.view.View
@@ -12,7 +12,7 @@ import com.bumptech.glide.Glide
 import com.kwekboss.allnews.R
 import com.kwekboss.allnews.model.Article
 
-class SavedNewsAdapter( private val deleteArticle:DeleteFrmFavourite, private val savedArticle:SavedArticles):RecyclerView.Adapter<SavedNewsAdapter.ViewHolder>() {
+class FavouriteAdapter(private val favouriteNewsInterface: FavouriteNewsInterface):RecyclerView.Adapter<FavouriteAdapter.ViewHolder>() {
 
     private val diffUtil = object : DiffUtil.ItemCallback<Article>(){
         override fun areItemsTheSame(oldItem: Article, newItem: Article): Boolean {
@@ -30,7 +30,7 @@ class SavedNewsAdapter( private val deleteArticle:DeleteFrmFavourite, private va
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ViewHolder {
         val layout = LayoutInflater.from(parent.context).inflate(R.layout.news_layout,parent,false)
-    return ViewHolder(layout,deleteArticle, savedArticle)
+    return ViewHolder(layout, favouriteNewsInterface)
     }
 
     override fun onBindViewHolder(holder: ViewHolder, position: Int) {
@@ -41,18 +41,19 @@ class SavedNewsAdapter( private val deleteArticle:DeleteFrmFavourite, private va
        return differ.currentList.size
     }
 
-    inner class ViewHolder(itemView:View,deleteArticle: DeleteFrmFavourite, savedArticle: SavedArticles):RecyclerView.ViewHolder(itemView){
+    inner class ViewHolder(itemView:View, favouriteNews: FavouriteNewsInterface):RecyclerView.ViewHolder(itemView){
 
         init {
             itemView.setOnClickListener {
-                savedArticle.clickedSaveArticle(differ.currentList[absoluteAdapterPosition])
+                favouriteNews.openSavedArticle(differ.currentList[absoluteAdapterPosition])
             }
 
             itemView.setOnLongClickListener{
-                deleteArticle.delete(differ.currentList[absoluteAdapterPosition])
+                favouriteNews.deleteSavedArticle(differ.currentList[absoluteAdapterPosition])
             return@setOnLongClickListener true
             }
         }
+
         fun bindView(news: Article) {
             val newsTittle = itemView.findViewById<TextView>(R.id.news_tittle)
             val newsImage = itemView.findViewById<ImageView>(R.id.news_image)
@@ -70,12 +71,11 @@ class SavedNewsAdapter( private val deleteArticle:DeleteFrmFavourite, private va
 
     }
 
-    interface SavedArticles{
-        fun clickedSaveArticle(news: Article)
-    }
+    interface FavouriteNewsInterface{
 
-    interface DeleteFrmFavourite{
-        fun delete(news: Article)
+        fun openSavedArticle(news: Article)
+
+        fun deleteSavedArticle(news: Article)
     }
 
 }
