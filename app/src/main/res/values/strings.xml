@@ -3,14 +3,16 @@
     <string name="title_news_feed">News Feed</string>
     <string name="title_favourite">Favourite</string>
     <string name="title_search">Search</string>
-
+    <!-- TODO: Remove or change this placeholder text -->
+    <string name="hello_blank_fragment">Hello blank fragment</string>
+    <!-- My Texts -->
     <string name="search_bar_hint">Search any keyword</string>
     <string name="news_icon">News Agency Icon</string>
     <string name="news_string">News Image</string>
     <string name="save_news">Save News</string>
-    <string name="news_saved">News Article Has Been Saved</string>
+    <string name="news_saved">Article Saved</string>
     <string name="label_newsFeed">Top Headlines</string>
-    <string name="news_deleted">News Deleted Successfully</string>
-    <!-- TODO: Remove or change this placeholder text -->
-    <string name="hello_blank_fragment">Hello blank fragment</string>
+    <string name="news_deleted"> Deleted Successfully</string>
+    <string name="no_Internet">Sorry, Check Your Internet Connection</string>
+
 </resources>

@@ -2,6 +2,7 @@ package com.kwekboss.allnews.model
 
 
 import android.app.Application
+import android.net.ConnectivityManager
 import android.util.Log
 import androidx.lifecycle.AndroidViewModel
 import androidx.lifecycle.LiveData

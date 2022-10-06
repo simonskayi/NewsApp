@@ -25,7 +25,7 @@ import kotlinx.coroutines.launch
 class NewsFeedFragment : Fragment(), NewsAdapter.NewsfeedInterface {
     private lateinit var adapter: NewsAdapter
     private lateinit var progressBar: ProgressBar
-    lateinit var mainViewModel: MainViewModel
+    private lateinit var mainViewModel: MainViewModel
 
     override fun onCreateView(
         inflater: LayoutInflater,
@@ -49,8 +49,7 @@ class NewsFeedFragment : Fragment(), NewsAdapter.NewsfeedInterface {
         recyclerview.layoutManager = LinearLayoutManager(activity)
         recyclerview.adapter = adapter
 
-        // implementing infinite Scrolling of NewsArticles
-          fetchData()
+          fetchNewsData()
 
     }
 
@@ -65,16 +64,16 @@ class NewsFeedFragment : Fragment(), NewsAdapter.NewsfeedInterface {
         Toast.makeText(requireContext(),R.string.news_saved, Toast.LENGTH_SHORT).show()
     }
 
-    private fun fetchData(){
+    private fun fetchNewsData(){
         mainViewModel.newsData.observe(viewLifecycleOwner){
            lifecycleScope.launch {
                adapter.submitData(it)
            }
  // This will show a progress bar when news is loading or when new item is loaded again
               adapter.addLoadStateListener { loadStates ->
-                  if(loadStates.refresh is LoadState.Loading|| loadStates.append is LoadState.Loading){
+           if(loadStates.refresh is LoadState.Loading|| loadStates.append is LoadState.Loading){
                       progressBar.isVisible = true
-                  }
+             }
                   else{
                       progressBar.isVisible = false
                       val errorState = when{
@@ -84,7 +83,7 @@ class NewsFeedFragment : Fragment(), NewsAdapter.NewsfeedInterface {
                           else-> null
                       }
                       errorState?.let {
-                          Toast.makeText(requireContext(), it.error.toString(), Toast.LENGTH_LONG).show()
+                          Toast.makeText(requireContext(),R.string.no_Internet, Toast.LENGTH_LONG).show()
                       }
                   }
               }
