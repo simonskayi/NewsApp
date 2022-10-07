@@ -53,8 +53,8 @@ class SearchFragment : Fragment(), SearchAdapter.SearchNewsInterface {
                     viewModel.getSearch(searchQuery)
                 }else{
 
-                Snackbar.make(view,
-                    R.string.no_Internet,Snackbar.LENGTH_SHORT).show()
+                Snackbar.make(view,R.string.no_Internet,Snackbar.LENGTH_SHORT).show()
+
                 }
 
                 return false
