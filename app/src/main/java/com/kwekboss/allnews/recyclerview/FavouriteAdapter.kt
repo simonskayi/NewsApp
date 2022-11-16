@@ -47,11 +47,6 @@ class FavouriteAdapter(private val favouriteNewsInterface: FavouriteNewsInterfac
             itemView.setOnClickListener {
                 favouriteNews.openSavedArticle(differ.currentList[absoluteAdapterPosition])
             }
-
-            itemView.setOnLongClickListener{
-                favouriteNews.deleteSavedArticle(differ.currentList[absoluteAdapterPosition])
-            return@setOnLongClickListener true
-            }
         }
 
         fun bindView(news: Article) {
@@ -72,10 +67,10 @@ class FavouriteAdapter(private val favouriteNewsInterface: FavouriteNewsInterfac
     }
 
     interface FavouriteNewsInterface{
-
         fun openSavedArticle(news: Article)
-
-        fun deleteSavedArticle(news: Article)
     }
 
+   fun deleteSavedArticle(news: Article):Article{
+       return news
+   }
 }

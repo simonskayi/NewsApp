@@ -11,4 +11,5 @@
     <color name="backgroud_color">#ADA8A8</color>
     <color name="primary_cl">#A89A9A</color>
     <color name="primary_variant">#E9BDAAAA</color>
+    <color name="delColor">#B30404</color>
 </resources>
