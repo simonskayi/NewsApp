@@ -4,9 +4,9 @@ Stay up to date with the latest international news and breaking updates using th
 
 ## Features
 
-- **Latest News:** Stay informed with the most recent international news and breaking updates.
-- **Save for Later:** Click to save any news article for later viewing.
-- **Delete Articles:** Remove saved articles when they are no longer needed.
+- **Latest News:** Get a continuous feed of the most recent international news stories and breaking updates.
+- **Save for Later:** Find an interesting article? Save it with a single click to revisit it later when you have more time. No need to worry about losing track of important stories.
+- **Delete Articles:** Easily remove saved articles from your list when you've finished reading or don't need them anymore
 - **Search Functionality:** Quickly find specific news articles by entering keywords in the search bar.
 
 ## Technologies Used
